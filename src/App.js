@@ -1,11 +1,34 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useWeb3Context } from 'web3-react';
 import emoji from 'emojilib';
+import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import Web3 from 'web3';
 import SDK_CONTRACTS from '@mybit/contracts/networks/ropsten/Contracts';
 
 import './App.css';
+
+const Form = styled.form`
+  display: flex;
+  flex-wrap: 'wrap';
+`
+
+const StyledFormControl = styled(FormControl)`
+  form & {
+    margin: 16px;
+    min-width: 120px;
+  }
+`
+
+const StyledSelect = styled(Select)`
+  form & {
+    color: white;
+  }
+`
 
 function useMyBitNetwork() {
   const [ network, setNetwork ] = useState(null);
@@ -40,6 +63,7 @@ function MyComponent() {
   const mybit = useMyBitNetwork();
 
   const [ assets, setAssets ] = useState([])
+  const [ asset, setAsset ] = useState('')
   
   useEffect(() => {
     context.account || context.unsetConnector("MetaMask")
@@ -68,12 +92,35 @@ function MyComponent() {
           assets.length > 0 && 
           <Fragment>
             <h2> Assets in the MyBit Network </h2>
-            {
-              assets.map( asset => 
-                <p key={asset}><code>{ asset }</code></p>
-              )
-            }
+            <Form autoComplete="off">
+              <StyledFormControl>
+                <InputLabel htmlFor="asset-id">Asset</InputLabel>
+                <StyledSelect
+                  value={asset}
+                  onChange={(event) => setAsset(event.target.value)}
+                  inputProps={{
+                    name: 'asset',
+                    id: 'asset-id'
+                  }}
+                >
+                  {
+                    assets.map( asset => 
+                      <MenuItem key={asset} value={asset}>
+                        {asset}
+                      </MenuItem>
+                    )
+                  }
+                </StyledSelect>
+              </StyledFormControl>
+            </Form>
           </Fragment>
+        }
+        {
+          asset &&
+            <Fragment>
+              <h2> Current Asset </h2>
+              <p><code>{ asset }</code></p>
+            </Fragment>
         }
       </Fragment>
     ) : <h1> No account </h1>
