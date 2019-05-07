@@ -1562,7 +1562,7 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@mybit/contracts@0.1.21":
+"@mybit/contracts@0.1.21", "@mybit/contracts@^0.1.21":
   version "0.1.21"
   resolved "https://registry.yarnpkg.com/@mybit/contracts/-/contracts-0.1.21.tgz#d5266a3f820231e2ab58ff43f242003ff644cd93"
   integrity sha512-oSCdpkU+DNUsWY6YVmvB+jW5RdMVTnZH4KGwSvg/Y8CCfH1cXVN1ZIFE8CKACjLTgyquhaVaTub4uczSK3ZCog==
@@ -5131,6 +5131,11 @@ emoji-regex@^7.0.1, emoji-regex@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
   integrity sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==
+
+emojilib@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/emojilib/-/emojilib-2.4.0.tgz#ac518a8bb0d5f76dda57289ccb2fdf9d39ae721e"
+  integrity sha512-5U0rVMU5Y2n2+ykNLQqMoqklN9ICBT/KsvC1Gz6vqHbz2AXXGkG+Pm5rMWk/8Vjrr/mY9985Hi8DYzn1F09Nyw==
 
 emojis-list@^2.0.0:
   version "2.1.0"
