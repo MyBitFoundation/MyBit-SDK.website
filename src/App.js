@@ -58,12 +58,21 @@ async function getAssets(network) {
   return assets;
 }
 
+async function getFundingGoal(network, asset) {
+  console.log('[ getFundingGoal ] init');
+  const fundingGoal = await network.getFundingGoal(asset);
+  return fundingGoal;
+}
+
 function MyComponent() {
   const context = useWeb3Context();
   const mybit = useMyBitNetwork();
 
   const [ assets, setAssets ] = useState([])
-  const [ asset, setAsset ] = useState('')
+  const [ asset, setAsset ] = useState({
+    address: '',
+    fundingGoal: null
+  })
   
   useEffect(() => {
     context.account || context.unsetConnector("MetaMask")
@@ -96,8 +105,11 @@ function MyComponent() {
               <StyledFormControl>
                 <InputLabel htmlFor="asset-id">Asset</InputLabel>
                 <StyledSelect
-                  value={asset}
-                  onChange={(event) => setAsset(event.target.value)}
+                  value={asset.address}
+                  onChange={(event) => setAsset({
+                    address: event.target.value
+                  })
+                  }
                   inputProps={{
                     name: 'asset',
                     id: 'asset-id'
@@ -105,7 +117,10 @@ function MyComponent() {
                 >
                   {
                     assets.map( asset => 
-                      <MenuItem key={asset} value={asset}>
+                      <MenuItem 
+                        key={asset} 
+                        value={asset}
+                      >
                         {asset}
                       </MenuItem>
                     )
@@ -116,10 +131,30 @@ function MyComponent() {
           </Fragment>
         }
         {
-          asset &&
+          asset.address &&
             <Fragment>
               <h2> Current Asset </h2>
-              <p><code>{ asset }</code></p>
+              <p><code>{ asset.address }</code></p>
+              <div>
+                <p> Get Funding Goal </p>
+                <Button 
+                  variant="contained" 
+                  color="primary"
+                  onClick={
+                    async () => 
+                      setAsset({
+                        ...asset,
+                        fundingGoal: 
+                        await getFundingGoal(
+                          mybit.network, asset.address
+                        )
+                      })
+                  }
+                >
+                  Submit
+                </Button>
+                <p>{ asset.fundingGoal }</p>
+              </div>
             </Fragment>
         }
       </Fragment>
